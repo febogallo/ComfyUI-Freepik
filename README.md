@@ -1,238 +1,326 @@
-# ComfyUI-Freepik Custom Node
+# ComfyUI-Freepik
 
-Integrate **Freepik API** directly into your ComfyUI workflows. Access powerful AI image generation, upscaling, editing, and video generation tools powered by Freepik and Magnific.ai.
+> Professional Freepik AI integration for ComfyUI workflows
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![ComfyUI](https://img.shields.io/badge/ComfyUI-Custom%20Node-orange)](https://github.com/comfyanonymous/ComfyUI)
 
-## 🚀 Features
+Bring Freepik's powerful AI capabilities directly into your ComfyUI workflows with seamless integration, smart caching, and pay-as-you-go pricing.
 
-### Phase 1: Core Features (Currently Available)
+![ComfyUI-Freepik Banner](https://via.placeholder.com/1200x300/1a1a1a/00d4ff?text=ComfyUI-Freepik)
 
-#### Image Generation
-- **Freepik Mystic** - Photorealistic AI image generation (1K/2K/4K)
-  - LoRA support for custom styles and characters
-  - Advanced prompt control
-  - Multiple aspect ratios
+## ✨ Features
 
-#### Image Editing
-- **Upscaler Creative** - Enhance and stylize with AI-guided detail
-- **Upscaler Precision** - High-fidelity upscaling without hallucinations
-- **Remove Background** - Quick AI-powered background removal
+- 🎨 **Mystic AI** - Photorealistic text-to-image generation
+- 🔍 **Creative Upscaler** - Magnific.ai powered prompt-guided enhancement (2x-16x)
+- 🎯 **Precision Upscaler** - High-fidelity upscaling without hallucinations
+- ✂️ **Background Removal** - Instant AI-powered background removal
+- 💾 **Smart Caching** - Automatic result caching (30-day retention)
+- 💰 **Cost Management** - Real-time cost estimation before execution
+- 🔄 **Async Processing** - Non-blocking task management with progress tracking
 
-#### Smart Features
-- ✅ Intelligent caching system (avoid redundant API calls)
-- ✅ Cost estimation before execution
-- ✅ Progress tracking for long operations
-- ✅ Automatic retry with exponential backoff
+## 🚀 Quick Start
 
-## 📦 Installation
+### Installation
 
-### Method 1: Git Clone (Recommended)
-
+1. **Clone or download** into your ComfyUI custom nodes directory:
 ```bash
-cd ComfyUI/custom_nodes/
-git clone https://github.com/YOUR_USERNAME/ComfyUI-Freepik.git
+cd ComfyUI/custom_nodes
+git clone https://github.com/yourusername/ComfyUI-Freepik.git
 cd ComfyUI-Freepik
+```
+
+2. **Install dependencies:**
+```bash
 pip install -r requirements.txt
 ```
 
-### Method 2: Manual Install
+3. **Get your API key:**
+   - Visit [Freepik API Dashboard](https://www.freepik.com/developers/dashboard)
+   - Sign up and create an API key
+   - Get $5 free credits to start
 
-1. Download this repository
-2. Extract to `ComfyUI/custom_nodes/ComfyUI-Freepik`
-3. Install dependencies:
-```bash
-pip install requests pillow
-```
+4. **Restart ComfyUI** and look for nodes under `Freepik/` category
 
-### Method 3: ComfyUI Manager
+### First Generation
 
-*(Coming soon - will be added to ComfyUI Manager registry)*
-
-## 🔑 Getting Your API Key
-
-1. Go to [Freepik Developers Dashboard](https://www.freepik.com/developers/dashboard)
-2. Create a new application
-3. Copy your API key
-4. You'll receive **$5 USD in free credits** to get started!
-
-## 🎨 Usage Examples
-
-### Basic Text-to-Image Generation
-
-```
-1. Add "Freepik Mystic" node
+1. Add `Freepik Mystic` node
 2. Enter your API key
-3. Write your prompt: "modern architectural visualization, luxury interior"
-4. Select resolution (2K recommended)
-5. Execute!
+3. Write a prompt
+4. Connect to `Preview Image` or `Save Image`
+5. Queue prompt!
+
+## 📦 Available Nodes
+
+### 🎨 Freepik Mystic (Text-to-Image)
+Generate photorealistic 2K images from text prompts.
+
+**Features:**
+- Multiple aspect ratios (16:9, 1:1, 9:16, 4:3, 21:9)
+- LoRA style support
+- Seed control for reproducibility
+- Cost: €0.10 per image
+
+**Outputs:**
+- `square_1_1`: 2048×2048
+- `widescreen_16_9`: 2752×1536
+- `social_story_9_16`: 1536×2752
+
+### 🔍 Freepik Upscaler Creative
+AI-powered upscaling with prompt guidance (Powered by Magnific.ai)
+
+**Features:**
+- Upscale factors: 2x, 4x, 8x, 16x
+- Prompt-guided enhancement
+- Creativity control (0.0-1.0)
+- Detail level control (0.0-1.0)
+- Cost: €0.10 - €1.60+ depending on output size
+
+**Best for:**
+- Architectural renders (creativity: 0.3-0.5)
+- Interior design (detail: 0.6-0.7)
+- Concept art enhancement
+
+### 🎯 Freepik Upscaler Precision
+High-fidelity upscaling without AI hallucinations
+
+**Features:**
+- Faithful to original content
+- Perfect for logos, UI, technical drawings
+- Denoise strength control
+- Sharpen control
+- Same cost structure as Creative
+
+### ✂️ Freepik Remove Background
+Instant background removal with alpha mask output
+
+**Features:**
+- Returns image + alpha mask
+- Fast and reliable
+- Minimal cost
+
+## 💰 Pricing & Cost Comparison
+
+### Pay-As-You-Go (No Subscription Required)
+
+| Operation | Cost |
+|-----------|------|
+| Text-to-Image (2K) | €0.10 |
+| Upscale 2x | €0.10 |
+| Upscale 4x | €0.40 |
+| Upscale 8x | €1.60 |
+| Remove Background | Low/Free |
+
+### vs Magnific AI Platform
+
+**ComfyUI-Freepik is more cost-effective when:**
+- ✅ You process **< 90 upscales/month** → Save 33-89%
+- ✅ You need **automation** and complex workflows
+- ✅ Usage is **variable** month-to-month
+- ✅ You prefer **pay-as-you-go** with no monthly commitment
+
+**Breakeven Analysis:**
+
+| Monthly Volume | Magnific Subscription | API Pay-as-you-go | Savings |
+|----------------|----------------------|-------------------|---------|
+| 10 upscales | $39 | $4.32 | **$34.68 (89%)** |
+| 50 upscales | $39 | $21.60 | **$17.40 (45%)** |
+| 90 upscales | $39 | $38.88 | **Breakeven** |
+| 200 upscales | $39 | $86.40 | -$47.40 |
+
+**For most users (< 90/month): ComfyUI-Freepik saves 33-89%**
+
+[📊 Read full cost analysis](docs/COST_ANALYSIS.md)
+
+## 🎯 Example Workflows
+
+### Basic Generation
+```
+Freepik Mystic → Preview Image
 ```
 
-### Upscaling Workflow
-
+### Generation + Enhancement
 ```
-LoadImage → FreepikUpscalerCreative (4x) → SaveImage
-```
+Freepik Mystic (2K, 16:9) → 
+Freepik Upscaler Creative (4x) → 
+Save Image
 
-### Remove Background + Generation
-
-```
-LoadImage → FreepikRemoveBackground → [Your processing] → SaveImage
+Output: 2752×1536 → 11008×6144
 ```
 
-## 💰 Pricing Reference
+### Architectural Visualization Pipeline
+```
+Freepik Mystic (architectural prompt) → 
+Freepik Upscaler Precision (2x-4x) → 
+Post-processing nodes → 
+Final delivery
+```
 
-Based on Freepik API pricing (as of documentation):
+### Background Removal
+```
+Load Image → 
+Freepik Remove Background → 
+Composite with new background
+```
 
-| Operation | Cost per Operation |
-|-----------|-------------------|
-| Mystic 1K | €0.05 |
-| Mystic 2K | €0.10 |
-| Mystic 4K | €0.20 |
-| Upscaler 2x (1K→2K) | €0.10 |
-| Upscaler 4x (1K→4K) | €0.40 |
-| Relight | €0.10 |
-| Style Transfer | €0.10 |
-| Remove Background | Variable |
+## 🏗️ Architecture
 
-**Note:** All nodes display estimated cost before execution.
+```
+ComfyUI_Freepik/
+├── __init__.py              # Node registration
+├── requirements.txt         # Dependencies
+├── api/
+│   ├── client.py           # HTTP client with retry logic
+│   └── tasks.py            # Async task manager
+├── nodes/
+│   ├── generation/
+│   │   └── mystic_node.py  # Text-to-image
+│   ├── editing/
+│   │   └── upscaler_nodes.py # Upscalers
+│   └── utilities/
+│       └── remove_bg_node.py # Background removal
+└── utils/
+    ├── cache.py            # Caching system
+    └── image_utils.py      # Image conversions
+```
 
-## ⚙️ Node Configuration
+## 🔧 Technical Highlights
 
-### Freepik Mystic
+- **Smart Caching**: MD5-based parameter matching with automatic cleanup
+- **Async Processing**: Non-blocking execution with configurable intervals
+- **Error Recovery**: Exponential backoff retry strategy (3 retries)
+- **Multi-format Support**: JSON + multipart/form-data requests
+- **Progress Tracking**: Real-time status updates during processing
+- **Cost Transparency**: Estimation before execution
 
-**Required:**
-- `api_key`: Your Freepik API key
-- `prompt`: Text description of desired image
-- `resolution`: 1K / 2K / 4K
-- `aspect_ratio`: Various ratios supported
+## 📋 Requirements
 
-**Optional:**
-- `lora_id`: Custom LoRA for specific styles
-- `lora_weight`: LoRA influence (0.0 - 2.0)
-- `seed`: Reproducible results (-1 for random)
-- `use_cache`: Enable/disable caching
+- Python 3.9+
+- ComfyUI (latest version recommended)
+- Internet connection
+- Freepik API key
 
-### Freepik Upscaler Creative
+**Python Dependencies:**
+- requests
+- Pillow
+- torch
 
-**Required:**
-- `api_key`: Your API key
-- `image`: Input image tensor
-- `upscale_factor`: 2x, 4x, 8x, or 16x
-- `prompt`: Guide the enhancement style
+## 🎨 Parameter Reference
 
-**Parameters:**
-- `creativity`: 0.0 (faithful) to 1.0 (creative)
-- `detail_level`: Amount of detail to add
+### Magnific Creative Upscaler Equivalence
 
-### Freepik Upscaler Precision
+| Freepik Platform | ComfyUI Node | Value Mapping |
+|-----------------|--------------|---------------|
+| Creativity (0-10) | `creativity` | 0.0-1.0 (divide by 10) |
+| HDR (0-10) | `detail_level` | 0.0-1.0 (divide by 10) |
+| Scale Factor | `upscale_factor` | "2x", "4x", "8x", "16x" |
+| Prompt | `prompt` | Direct equivalent |
 
-**Use for:**
-- Logos and branding
-- UI elements
-- Product photography
-- Technical diagrams
+**Recommended for Architecture:**
+- Creativity: 0.3-0.5
+- Detail Level: 0.6-0.7
+- Prompt: "enhance architectural details, photorealistic render, natural lighting"
 
-**Best when:** You need exact preservation without "AI artifacts"
+[📖 Full parameter reference](docs/PARAMETER_REFERENCE.md)
 
-## 📊 Cache Management
+## 🛠️ Advanced Usage
 
-The cache system saves results locally to avoid redundant API calls:
-
+### Batch Processing
 ```python
-# View cache stats
-from ComfyUI-Freepik.utils.cache import get_cache
-
-cache = get_cache()
-cache.print_stats()
-
-# Clear old cache (older than 30 days)
-cache.clear_cache(older_than_days=30)
-
-# Clear all cache
-cache.clear_cache()
+# Process multiple images automatically
+for image in image_list:
+    mystic_node.generate(
+        api_key=api_key,
+        prompt=prompt,
+        aspect_ratio="widescreen_16_9"
+    )
 ```
 
-**Cache Location:** `ComfyUI-Freepik/cache/`
+### Custom Workflows
+Integrate with other ComfyUI nodes for complex pipelines:
+- Pre-processing with ControlNet
+- Post-processing with color correction
+- Automated client delivery systems
 
-## 🔧 Troubleshooting
+### Cost Optimization
+- Enable caching to avoid redundant API calls
+- Batch similar operations
+- Use appropriate resolution for your needs
 
-### Common Issues
+## ⚠️ Limitations
 
-**"API key not set" error:**
-- Make sure you've entered your API key in the node
-- Verify key is valid at [Freepik Dashboard](https://www.freepik.com/developers/dashboard)
+### API Restrictions
+- Mystic outputs fixed ~2K resolution (aspect ratio determines dimensions)
+- Some Magnific parameters not available (Resemblance, Fractality, Engine)
+- Rate limits apply (check Freepik API documentation)
 
-**"Task timeout" error:**
-- Some operations (especially upscaling) can take 5-10 minutes
-- Check your internet connection
-- Verify you have sufficient API credits
-
-**Import errors:**
-- Run `pip install -r requirements.txt`
-- Restart ComfyUI completely
-
-**Cache issues:**
-- Clear cache: Delete `ComfyUI-Freepik/cache/` folder
-- Disable cache: Set `use_cache` to False
+### vs Magnific.ai Platform
+- ❌ No Resemblance slider
+- ❌ No Fractality slider  
+- ❌ No Engine selection
+- ✅ But: Full workflow automation
+- ✅ And: Pay-as-you-go pricing
 
 ## 🗺️ Roadmap
 
-### Phase 2: Video Generation (Coming Soon)
-- Kling v2.5 Pro/Std
-- PixVerse V5
-- Multiple video models
-- Image-to-video workflows
+### Phase 2 (Future)
+- [ ] Video Generation nodes (Kling v2.5, PixVerse V5)
+- [ ] Image Relighting
+- [ ] Style Transfer
+- [ ] Image-to-Prompt utility
+- [ ] LoRA Training nodes
+- [ ] Batch processing manager
+- [ ] Credit tracker dashboard
 
-### Phase 3: Advanced Features
-- Style Transfer
-- Image Relight
-- Image Expand (outpainting)
-- Image-to-Prompt
-- Improve Prompt
+### Improvements
+- [ ] Remove debug prints
+- [ ] Add architectural preset system
+- [ ] Optimize cache management
+- [ ] Progress bars in UI
+- [ ] Better error messages
 
-### Phase 4: Stock Content
-- Search Freepik stock library
-- Download icons, vectors, photos
-- Integration with generation workflows
+## 📚 Documentation
+
+- [Installation Guide](docs/INSTALLATION.md)
+- [Cost Analysis](docs/COST_ANALYSIS.md)
+- [Parameter Reference](docs/PARAMETER_REFERENCE.md)
+- [Changelog](CHANGELOG.md)
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
+MIT License - see [LICENSE](LICENSE) file for details
 
 ## 🙏 Credits
 
-- **Freepik API** - Image generation and editing technology
-- **Magnific.ai** - Upscaling technology
-- **ComfyUI** - Node-based UI framework
-- **Developer:** Felipe @ Pixelflakes
+**Developer:** Felipe @ Pixelflakes  
+**Built for:** Architectural visualization workflows  
+**Powered by:** Freepik API + Magnific.ai technology  
 
-## 📞 Support
-
-- **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/ComfyUI-Freepik/issues)
-- **Freepik API Docs:** [docs.freepik.com](https://docs.freepik.com)
-- **Freepik Discord:** [Join Discord](https://discord.com/invite/znXUEBkqM7)
+**Special thanks to:**
+- ComfyUI community
+- Freepik API team
+- Magnific.ai for upscaling technology
 
 ## 🔗 Links
 
-- [Freepik API Homepage](https://www.freepik.com/api)
-- [API Documentation](https://docs.freepik.com/introduction)
-- [Get API Key](https://www.freepik.com/developers/dashboard)
-- [Pricing Information](https://www.freepik.com/api/pricing)
+- [Freepik API Documentation](https://docs.freepik.com)
+- [Freepik Developer Dashboard](https://www.freepik.com/developers/dashboard)
+- [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+- [Magnific.ai](https://magnific.ai)
+
+## 📞 Support
+
+- **Issues:** [GitHub Issues](https://github.com/yourusername/ComfyUI-Freepik/issues)
+- **API Docs:** https://docs.freepik.com
+- **Freepik Support:** https://support.freepik.com
 
 ---
 
-**⭐ If this node is useful to you, please star the repository!**
+**Made with ❤️ for the ComfyUI community**
 
-Built with ❤️ for the ComfyUI community
+*If you find this useful, please ⭐ star the repository!*
