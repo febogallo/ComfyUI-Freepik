@@ -1,0 +1,32 @@
+{
+  "name": "ComfyUI-Freepik",
+  "version": "0.1.0",
+  "description": "Freepik API integration for ComfyUI - AI image generation, upscaling, and editing",
+  "author": "Felipe @ Pixelflakes",
+  "license": "MIT",
+  "repository": "https://github.com/YOUR_USERNAME/ComfyUI-Freepik",
+  
+  "cache": {
+    "enabled": true,
+    "max_age_days": 30,
+    "auto_cleanup": true
+  },
+  
+  "api": {
+    "base_url": "https://api.freepik.com",
+    "timeout": 30,
+    "max_retries": 3
+  },
+  
+  "defaults": {
+    "mystic": {
+      "resolution": "2K",
+      "aspect_ratio": "16:9",
+      "guidance_scale": 7.5
+    },
+    "upscaler": {
+      "creativity": 0.5,
+      "detail_level": 0.5
+    }
+  }
+}
