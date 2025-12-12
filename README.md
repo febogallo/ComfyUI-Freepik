@@ -8,7 +8,7 @@
 
 Bring Freepik's powerful AI capabilities directly into your ComfyUI workflows with seamless integration, smart caching, and pay-as-you-go pricing.
 
-![ComfyUI-Freepik Banner](https://via.placeholder.com/1200x300/1a1a1a/00d4ff?text=ComfyUI-Freepik)
+![ComfyUI-Freepik Banner](assets/banner.png)
 
 ## ✨ Features
 
