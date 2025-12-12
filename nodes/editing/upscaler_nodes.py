@@ -148,20 +148,21 @@ class FreepikUpscalerCreative:
             return (pil2tensor(error_img), f"error|{str(e)}", 0.0)
     
     def _estimate_cost(self, input_size, output_size):
-        """Calculate upscaling cost based on output area"""
+        """Calculate upscaling cost based on Freepik API pricing tiers"""
         output_area = output_size[0] * output_size[1]
-        
-        # Pricing tiers (from API docs)
-        if output_area <= 1280 * 960:
+    
+        # Official pricing tiers from Freepik API docs
+        # Based on output area in pixels
+        if output_area <= 1280 * 960:  # 1,228,800 pixels
             return 0.10
-        elif output_area <= 2560 * 1920:
+        elif output_area <= 2560 * 1920:  # 4,915,200 pixels
+            return 0.20  # NOT 0.40!
+        elif output_area <= 5120 * 3840:  # 19,660,800 pixels
             return 0.40
-        elif output_area <= 5120 * 3840:
-            return 1.60
-        elif output_area <= 10000 * 10000:
+        elif output_area <= 10000 * 10000:  # 100,000,000 pixels
             return 1.20
         else:
-            return 2.00
+            return 1.60
 
 
 class FreepikUpscalerPrecision:
