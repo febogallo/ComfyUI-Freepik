@@ -1,6 +1,6 @@
 """
 Freepik Mystic Node - Photorealistic AI Image Generation
-Fixed resolution - aspect ratio determines final dimensions
+Generate 1K/2K/4K images with LoRA support
 """
 
 import torch
@@ -20,8 +20,7 @@ from ...utils.cache import get_cache
 class FreepikMystic:
     """
     Generate photorealistic images using Freepik Mystic
-    Note: Resolution is fixed (~2k), aspect ratio determines dimensions
-    Use Upscaler node for higher resolutions
+    Supports 1K, 2K, and 4K resolutions with LoRA styles
     """
     
     def __init__(self):
@@ -48,7 +47,24 @@ class FreepikMystic:
                     "multiline": True,
                     "placeholder": "Describe what you don't want"
                 }),
-                "aspect_ratio": (["square_1_1", "widescreen_16_9", "social_story_9_16", "classic_4_3", "traditional_3_4", "film_horizontal_21_9"], {
+                "resolution": (["1k", "2k", "4k"], {
+                    "default": "2k"
+                }),
+                "aspect_ratio": ([
+                    "square_1_1",
+                    "widescreen_16_9",
+                    "social_story_9_16",
+                    "classic_4_3",
+                    "traditional_3_4",
+                    "standard_3_2",
+                    "portrait_2_3",
+                    "horizontal_2_1",
+                    "vertical_1_2",
+                    "social_5_4",
+                    "social_post_4_5",
+                    "smartphone_horizontal_20_9",
+                    "smartphone_vertical_9_20"
+                ], {
                     "default": "widescreen_16_9"
                 }),
                 "num_images": ("INT", {
@@ -67,10 +83,7 @@ class FreepikMystic:
                 "seed": ("INT", {
                     "default": -1,
                     "min": -1,
-                    "max": 4294967295
-                }),
-                "control_after_generate": (["randomize", "fixed"], {
-                    "default": "randomize"
+                    "max": 0xffffffffffffffff
                 }),
                 "use_cache": ("BOOLEAN", {
                     "default": True
@@ -92,14 +105,13 @@ class FreepikMystic:
         }
     
     RETURN_TYPES = ("IMAGE", "STRING", "FLOAT")
-    RETURN_NAMES = ("image", "task_info", "cost")
+    RETURN_NAMES = ("image", "task_info", "estimated_cost")
     FUNCTION = "generate"
     CATEGORY = "Freepik/Generation"
     OUTPUT_NODE = False
     
-    def generate(self, api_key, prompt, negative_prompt, 
-                 aspect_ratio, num_images, guidance_scale, seed, 
-                 control_after_generate, use_cache,
+    def generate(self, api_key, prompt, negative_prompt, resolution, 
+                 aspect_ratio, num_images, guidance_scale, seed, use_cache,
                  lora_id="", lora_weight=1.0):
         """
         Generate image using Freepik Mystic
@@ -115,14 +127,13 @@ class FreepikMystic:
                 "prompt": prompt,
                 "negative_prompt": negative_prompt,
                 "num_images": num_images,
-                "guidance_scale": guidance_scale,
-                "image_size": "2k",  # Fixed - Mystic outputs fixed resolution
+                "resolution": resolution,
                 "aspect_ratio": aspect_ratio,
             }
             
             # Add optional parameters
             if seed != -1:
-                params["seed"] = seed % 4294967296
+                params["seed"] = seed
             
             if lora_id:
                 params["lora"] = {
@@ -130,9 +141,9 @@ class FreepikMystic:
                     "weight": lora_weight
                 }
             
-            # Fixed cost for Mystic
-            cost = 0.10 * num_images
-            print(f"\n💰 Cost: €{cost:.2f}")
+            # Estimate cost
+            cost = self._estimate_cost(resolution, num_images)
+            print(f"\n💰 Estimated cost: €{cost:.2f}")
             
             # Check cache
             cache_key_params = {**params, "api": "mystic"}
@@ -147,7 +158,7 @@ class FreepikMystic:
             
             # Execute API call
             print(f"\n🚀 Starting Mystic generation...")
-            print(f"   Aspect Ratio: {aspect_ratio}")
+            print(f"   Resolution: {resolution} ({aspect_ratio})")
             print(f"   Images: {num_images}")
             print(f"   Guidance: {guidance_scale}")
             
@@ -167,6 +178,7 @@ class FreepikMystic:
                     cache_key_params,
                     result_image,
                     extra_metadata={
+                        "resolution": resolution,
                         "aspect_ratio": aspect_ratio,
                         "cost": cost
                     }
@@ -175,7 +187,7 @@ class FreepikMystic:
             # Convert to tensor
             image_tensor = pil2tensor(result_image)
             
-            task_info = f"success|{aspect_ratio}|{result_image.size}"
+            task_info = f"success|{resolution}|{aspect_ratio}|{result_image.size}"
             
             print(f"✅ Generation complete: {result_image.size}")
             
@@ -192,6 +204,26 @@ class FreepikMystic:
             task_info = f"error|{error_msg}"
             
             return (image_tensor, task_info, 0.0)
+    
+    def _convert_resolution(self, resolution: str) -> dict:
+        """Convert resolution string to API format"""
+        # This is a placeholder - adjust based on actual API requirements
+        resolution_map = {
+            "1K": {"width": 1024, "height": 1024},
+            "2K": {"width": 2048, "height": 2048},
+            "4K": {"width": 4096, "height": 4096}
+        }
+        return resolution_map.get(resolution, resolution_map["2K"])
+    
+    def _estimate_cost(self, resolution: str, num_images: int) -> float:
+        """Estimate generation cost"""
+        costs = {
+            "1k": 0.05,
+            "2k": 0.10,
+            "4k": 0.20
+        }
+        base_cost = costs.get(resolution, 0.10)
+        return base_cost * num_images
 
 
 # Node export
